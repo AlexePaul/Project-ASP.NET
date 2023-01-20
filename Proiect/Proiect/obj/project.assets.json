@@ -230,11 +230,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\proiect ASP.NET\\Proiect\\Proiect\\Proiect.csproj",
+      "projectUniqueName": "D:\\GitHub-Repositories\\Project-ASP.NET\\Proiect\\Proiect\\Proiect.csproj",
       "projectName": "Proiect",
-      "projectPath": "D:\\proiect ASP.NET\\Proiect\\Proiect\\Proiect.csproj",
+      "projectPath": "D:\\GitHub-Repositories\\Project-ASP.NET\\Proiect\\Proiect\\Proiect.csproj",
       "packagesPath": "C:\\Users\\Paul\\.nuget\\packages\\",
-      "outputPath": "D:\\proiect ASP.NET\\Proiect\\Proiect\\obj\\",
+      "outputPath": "D:\\GitHub-Repositories\\Project-ASP.NET\\Proiect\\Proiect\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
