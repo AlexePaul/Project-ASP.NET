@@ -22,7 +22,7 @@ namespace Proiect.Models
         public string PhoneNumber { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
 
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; } = new List<Order>();
 
 
     }

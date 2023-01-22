@@ -9,6 +9,6 @@ namespace Proiect.Models
 
         public string Category { get; set; } = string.Empty;
 
-        public List<OrderContains> orders {get; set; }
+        public List<OrderContains> orders {get; set; } = new List<OrderContains>();
     }
 }
