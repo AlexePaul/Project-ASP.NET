@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Proiect.Models;
 using Proiect.Models.DTOs;
+using Proiect.Services.UserService;
 
 namespace Proiect.Controllers
 {
@@ -10,55 +11,51 @@ namespace Proiect.Controllers
 
     public class UserController : ControllerBase
     {
+        public readonly IUserService _userService;
 
-        private static List<User> Users = new List<User>
+        public UserController(IUserService service)
         {
-            new User
-            {
-                Id = 0x1,
-                FirstName= "Test",
-                LastName= "Testulescu",
-                Email= "Test@Test.com",
-                PhoneNumber= "07TEST",
-                BirthDate= new DateTime(1995, 11, 25),
-                Orders= new List<Order> {}
-            },
-            new User
-            {
-                Id = 0x2,
-                FirstName= "Test2",
-                LastName= "Testulescu2",
-                Email= "Test2@Test.com",
-                PhoneNumber= "07TEST2",
-                BirthDate= new DateTime(1992, 11, 25),
-                Orders= new List<Order> {}
-            }
-        };
+            _userService = service;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(Users);
+            return Ok( await _userService.GetAllUsers() );
         }
 
         [HttpPost]
         public async Task<ActionResult<List<User>>> AddUser(UserRequestDTO NewUser)
         {
-
-            User UserToAdd = new User(NewUser);
-
-            Users.Add(UserToAdd);
-            return Ok(Users);
+            await _userService.AddUser(NewUser);
+            return Ok(await _userService.GetAllUsers());
         }
 
         [HttpDelete]
-        public async Task<ActionResult<List<User>>> RemoveUser(int UserId)
+        public async Task<ActionResult<List<User>>> RemoveUser(Guid UserId)
         {
-            var user = Users.Find(x => x.Id == UserId);
-            if (user == null)
-                return NotFound();
-            Users.Remove(user);
-            return Ok(Users);
-        } 
+            var ok = await _userService.RemoveUser(UserId);
+            if (ok == true)
+            {
+                return Ok(await _userService.GetAllUsers());
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPut]
+        public async Task<ActionResult<User>> UpdateUser(Guid UserId, UserRequestDTO NewUser)
+        {
+            var ok = await _userService.EditUser(UserId, NewUser);
+            if (ok == true)
+            {
+                return Ok(await _userService.GetAllUsers());
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
