@@ -89,3 +89,8 @@ D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\System.T
 D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\AutoMapper.dll
 D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\BCrypt.Net.dll
+D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\Scrutor.dll
+D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+D:\GitHub-Repositories\Project-ASP.NET\Proiect\Proiect\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll

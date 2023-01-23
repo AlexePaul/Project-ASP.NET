@@ -3,6 +3,8 @@ using AutoMapper;
 using Proiect.Repos.UserRepo;
 using Proiect.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Proiect.Helpers.Utils;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Proiect.Services.UserService
 {
@@ -10,10 +12,12 @@ namespace Proiect.Services.UserService
     {
         public IUserRepo _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepo userRepository, IMapper mapper)
+        private readonly IJwtUtils _JwtUtils;
+        public UserService(IUserRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _JwtUtils = jwtUtils;
         }
         public async Task<List<UserDTO>> GetAllUsers()
         {
@@ -22,12 +26,13 @@ namespace Proiect.Services.UserService
 
             return result;
         }
-        public async Task AddUser(UserRequestDTO NewUser)
+        public async Task<User> AddUser(UserRequestDTO NewUser)
         {
             var newUser = _mapper.Map<User>(NewUser);
             newUser.Id = new Guid();
             await _userRepository.CreateAsync(newUser);
             await _userRepository.SaveAsync();
+            return newUser;
         }
         public async Task<bool> RemoveUser(Guid Id)
         {
@@ -59,6 +64,18 @@ namespace Proiect.Services.UserService
             else
             {
                 return false;
+            }
+        }
+        public string Auth(UserLogInDTO request)
+        {
+            var usr = _userRepository.FindByEmail(request.Email);
+            if(usr != null && BCryptNet.Verify(request.Password, usr.Password))
+            {
+                return _JwtUtils.GenerateJwtToken(usr);
+            }
+            else
+            {
+                return null;
             }
         }
     }

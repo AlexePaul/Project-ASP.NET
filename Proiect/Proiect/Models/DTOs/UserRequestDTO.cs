@@ -1,4 +1,5 @@
 ﻿using Proiect.Models.Base;
+using Proiect.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Proiect.Models.DTOs
@@ -14,5 +15,9 @@ namespace Proiect.Models.DTOs
         [Required]
         public string PhoneNumber { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
+        [Required] 
+        public string Password { get; set;} =string.Empty;
+
+        public Role role { get; set; } = Role.User;
     }
 }

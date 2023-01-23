@@ -10,5 +10,10 @@ namespace Proiect.Repos.UserRepo
         public UserRepo(DataContext context) : base(context)
         {
         }
+
+        public User FindByEmail(string email)
+        {
+            return _table.FirstOrDefault(x => x.Email == email);
+        } 
     }
 }
