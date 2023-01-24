@@ -25,22 +25,21 @@ namespace Proiect.Helpers.Utils
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("id", user.Id.ToString())
+                    new Claim("id", user.Id.ToString()),
+                    new Claim("role", user.role.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(10),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(appPrivateKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
+
             return tokenHandler.WriteToken(token);
         }
 
         public Guid ValidateJwtToken(string token)
         {
-            if (token == null)
-            {
-                return Guid.Empty;
-            }
+            if (token == null) return Guid.Empty;
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtToken);
@@ -50,8 +49,7 @@ namespace Proiect.Helpers.Utils
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(appPrivateKey),
                 ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero,
+                ValidateAudience = false
             };
 
             try

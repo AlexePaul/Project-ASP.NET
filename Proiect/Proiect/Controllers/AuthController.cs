@@ -41,5 +41,19 @@ namespace Proiect.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("PromoteAdmin")]
+        public ActionResult<User> PromoteAdmin(Guid Id) 
+        {
+            var usr = _userService.PromoteAdmin(Id);
+            if (usr !=null)
+            {
+                return Ok(usr);
+            }
+            else
+            {
+                return BadRequest();
+            }    
+        }
     }
 }

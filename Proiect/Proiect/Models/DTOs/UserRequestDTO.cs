@@ -17,7 +17,5 @@ namespace Proiect.Models.DTOs
         public DateTime BirthDate { get; set; }
         [Required] 
         public string Password { get; set;} =string.Empty;
-
-        public Role role { get; set; } = Role.User;
     }
 }

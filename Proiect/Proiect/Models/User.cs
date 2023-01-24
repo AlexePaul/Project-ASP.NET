@@ -9,7 +9,7 @@ namespace Proiect.Models
     public class User : BaseModel
     {
         public User() { }
-        public string Password { get; set; } = string.Empty; //the password will be stored as a hash
+        public string Password { get; set; } = string.Empty;
         public string Adress { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

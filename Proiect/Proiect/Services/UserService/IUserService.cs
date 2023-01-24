@@ -8,6 +8,8 @@ namespace Proiect.Services.UserService
         Task<List<UserDTO>> GetAllUsers();
         public Task<User> AddUser(UserRequestDTO NewUser);
 
+        public User PromoteAdmin(Guid Id);
+
         public Task<bool> RemoveUser(Guid Id);
 
         public Task<bool> EditUser(Guid Id, UserRequestDTO NewUser);

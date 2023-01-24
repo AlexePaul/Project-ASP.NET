@@ -5,6 +5,8 @@ using Proiect.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Proiect.Helpers.Utils;
 using BCryptNet = BCrypt.Net.BCrypt;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Proiect.Models.Enums;
 
 namespace Proiect.Services.UserService
 {
@@ -30,6 +32,7 @@ namespace Proiect.Services.UserService
         {
             var newUser = _mapper.Map<User>(NewUser);
             newUser.Id = new Guid();
+            newUser.role = Role.User;
             await _userRepository.CreateAsync(newUser);
             await _userRepository.SaveAsync();
             return newUser;
@@ -72,6 +75,21 @@ namespace Proiect.Services.UserService
             if(usr != null && BCryptNet.Verify(request.Password, usr.Password))
             {
                 return _JwtUtils.GenerateJwtToken(usr);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public  User PromoteAdmin(Guid Id)
+        {
+            User usr = _userRepository.FindById(Id);
+            if (usr != null)
+            {
+                usr.role = Role.Admin;
+                _userRepository.Update(usr);
+                _userRepository.SaveAsync();
+                return usr;
             }
             else
             {
