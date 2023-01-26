@@ -13,7 +13,7 @@ namespace Proiect.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Delivery> Deliveries { get; set; } 
         public DbSet<OrderContains> OrdersContains { get; set; }
-        public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodReqestOrderDTO> Foods { get; set; }
         public DbSet<Restaurant> Restaurants { get; set;}
     }
 }

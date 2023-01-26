@@ -9,5 +9,7 @@ namespace Proiect.Models
         public string email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
+
+        public Order? order { get; set; } = null;
     }
 }

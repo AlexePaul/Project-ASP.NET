@@ -9,7 +9,7 @@ namespace Proiect.Helpers.Extensions
     {
         public static IServiceCollection AddRepos(this IServiceCollection services)
         {
-            services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<IOrderContainsRepo, OrderContainsRepo>();
 
             return services;
         }

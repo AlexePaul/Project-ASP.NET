@@ -5,6 +5,7 @@ namespace Proiect.Services.UserService
 {
     public interface IUserService
     {
+        public Task<User> GetUserById(Guid id);
         Task<List<UserDTO>> GetAllUsers();
         public Task<User> AddUser(UserRequestDTO NewUser);
 

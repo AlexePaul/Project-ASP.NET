@@ -12,10 +12,10 @@ namespace Proiect.Services.UserService
 {
     public class UserService : IUserService
     {
-        public IUserRepo _userRepository;
+        public IOrderContainsRepo _userRepository;
         private readonly IMapper _mapper;
         private readonly IJwtUtils _JwtUtils;
-        public UserService(IUserRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
+        public UserService(IOrderContainsRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -95,6 +95,12 @@ namespace Proiect.Services.UserService
             {
                 return null;
             }
+        }
+
+        public async Task<User> GetUserById(Guid Id)
+        {
+            var users = await _userRepository.GetAll();
+            return users.FirstOrDefault(usr => usr.Id == Id);
         }
     }
 }
