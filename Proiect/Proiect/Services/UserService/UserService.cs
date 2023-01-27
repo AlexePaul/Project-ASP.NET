@@ -12,10 +12,10 @@ namespace Proiect.Services.UserService
 {
     public class UserService : IUserService
     {
-        public IOrderContainsRepo _userRepository;
+        public IUserRepo _userRepository;
         private readonly IMapper _mapper;
         private readonly IJwtUtils _JwtUtils;
-        public UserService(IOrderContainsRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
+        public UserService(IUserRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
         {
             _userRepository = userRepository;
             _mapper = mapper;

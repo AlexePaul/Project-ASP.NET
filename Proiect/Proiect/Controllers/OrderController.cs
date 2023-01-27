@@ -7,7 +7,7 @@ using Proiect.Services.UserService;
 
 namespace Proiect.Controllers
 {
-    public class OrderController
+    public class OrderController :ControllerBase
     {
         public readonly IOrderService _OrderService;
         public readonly IUserService _UserService;

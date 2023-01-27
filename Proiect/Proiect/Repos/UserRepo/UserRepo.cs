@@ -5,9 +5,9 @@ using Proiect.Repos.UserRepo;
 
 namespace Proiect.Repos.UserRepo
 {
-    public class OrderContainsRepo : BaseRepo<User>, IOrderContainsRepo
+    public class UserRepo : BaseRepo<User>, IUserRepo
     {
-        public OrderContainsRepo(DataContext context) : base(context)
+        public UserRepo(DataContext context) : base(context)
         {
         }
 

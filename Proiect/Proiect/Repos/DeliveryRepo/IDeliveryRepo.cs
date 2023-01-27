@@ -4,6 +4,6 @@ namespace Proiect.Repos.DeliveryRepo
 {
     public interface IDeliveryRepo : IBaseRepo<Delivery>
     {
-        public Delivery GetDelivery();
+        public Task<Delivery> GetDelivery();
     }
 }

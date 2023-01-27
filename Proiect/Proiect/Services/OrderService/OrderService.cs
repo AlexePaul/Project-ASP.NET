@@ -30,7 +30,7 @@ namespace Proiect.Services.OrderService
         public async Task<bool> PlaceOrder(User _user, List<FoodRequestOrderDTO> cart, string _adress)
         {
             var NewOrder = new Order();
-            var UsingDelivery = _DeliveryRepo.GetDelivery();
+            var UsingDelivery = await _DeliveryRepo.GetDelivery();
             if (UsingDelivery == null)
                 return false;
             NewOrder.Adress = _adress;

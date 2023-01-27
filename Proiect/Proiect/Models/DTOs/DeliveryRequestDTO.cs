@@ -1,11 +1,7 @@
-﻿using Proiect.Models.Base;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Proiect.Models
+﻿namespace Proiect.Models.DTOs
 {
-    public class Delivery : BaseModel
+    public class DeliveryRequestDTO
     {
-        [ForeignKey("Order")]
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string email { get; set; } = string.Empty;
