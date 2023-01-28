@@ -12,7 +12,7 @@ namespace Proiect.Models
         public string Category { get; set; } = string.Empty;
 
         public Restaurant Restaurant { get; set; }
-
+        public Guid RestaurantId { get; set; }
         public List<OrderContains> orders {get; set; } = new List<OrderContains>();
     }
 }

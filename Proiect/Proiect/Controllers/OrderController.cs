@@ -7,6 +7,8 @@ using Proiect.Services.UserService;
 
 namespace Proiect.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OrderController :ControllerBase
     {
         public readonly IOrderService _OrderService;

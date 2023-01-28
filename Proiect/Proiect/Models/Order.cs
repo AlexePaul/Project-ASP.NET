@@ -8,7 +8,11 @@ namespace Proiect.Models
 
         public User User { get; set; }
 
+        public Guid UserId { get; set; }
+
         public Delivery delivery { get; set; }
+
+        public Guid DeliveryId { get; set; }
 
         public List<OrderContains> foods { get; set; }
     }

@@ -15,5 +15,12 @@ namespace Proiect.Data
         public DbSet<OrderContains> OrdersContains { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Restaurant> Restaurants { get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderContains>()
+                .HasKey(oc => new { oc.FoodId, oc.OrderId });
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
