@@ -33,5 +33,22 @@ namespace Proiect.Controllers
             var _user = await _UserService.GetUserById(Id);
             return await _OrderService.PlaceOrder(_user, Cart, _adress);
         }
+
+        [HttpPut]
+        [Authorize]
+
+        public async Task<Order> ChangeAdress(Guid OrderId, string Adress) 
+        {
+            var _Order = await _OrderService.UpdateAdress(OrderId, Adress);
+            return _Order;
+        }
+
+        [HttpDelete]
+        [Authorize]
+
+        public async Task<bool> FinishOrder(Guid OrderId)
+        {
+            return _OrderService.RemoveOrder(OrderId);
+        }
     }
 }

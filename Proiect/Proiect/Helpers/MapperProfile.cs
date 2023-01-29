@@ -11,6 +11,7 @@ namespace Proiect.Helpers
             CreateMap<User, UserDTO>();
             CreateMap<UserRequestDTO, User>();
             CreateMap<DeliveryRequestDTO, Delivery>();
+            CreateMap<FoodRequestDTO, Food>();
         }
     }
 }

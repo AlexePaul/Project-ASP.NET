@@ -25,7 +25,8 @@ namespace Proiect.Services.OrderService
         public async Task<List<Order>> GetAllOrdersByAnUser(Guid Id)
         {
             List<Order> orders = await _OrderRepository.GetAll();
-            return (List<Order>)orders.Where(o => o.User.Id == Id);
+            orders = (List<Order>)orders.Where(o => o.UserId == Id).ToList();
+            return orders;
         }
         public async Task<bool> PlaceOrder(User _user, List<FoodRequestOrderDTO> cart, string _adress)
         {
@@ -46,8 +47,32 @@ namespace Proiect.Services.OrderService
                 NewOrderContains.amount = cart[i].count;
                 await _OrderContainsRepository.CreateAsync(NewOrderContains);
             }
+            await _OrderRepository.SaveAsync();
+            await _OrderContainsRepository.SaveAsync();
             return true;
         }
-            
+
+        public async Task<Order> UpdateAdress(Guid OrderId, string Adress)
+        {
+            var OrderToUpdate = _OrderRepository.FindById(OrderId);
+            OrderToUpdate.Adress = Adress;
+            _OrderRepository.Update(OrderToUpdate);
+            await _OrderRepository.SaveAsync();
+            return OrderToUpdate;
+        }
+
+        public async Task<bool> RemoveOrder(Guid OrderId)
+        {
+            var ord = await _OrderRepository.FindByIdAsync(OrderId);
+            if (ord != null)
+            {
+                _OrderRepository.Delete(ord);
+                await _OrderRepository.SaveAsync();
+                return true;
+            }
+            else
+            { return false; }
+        }
+
     }
 }

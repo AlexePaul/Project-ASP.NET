@@ -1,6 +1,10 @@
-﻿namespace Proiect.Services.FoodService
+﻿using Proiect.Models;
+using Proiect.Models.DTOs;
+
+namespace Proiect.Services.FoodService
 {
-    public interface IDeliveryService
+    public interface IFoodService
     {
+        public Task<List<Food>> AddFood(Guid RestaurantId, FoodRequestDTO NewFood);
     }
 }
