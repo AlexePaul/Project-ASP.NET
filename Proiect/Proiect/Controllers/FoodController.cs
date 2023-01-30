@@ -24,5 +24,19 @@ namespace Proiect.Controllers
             return await _FoodService.AddFood(RestaurantId, NewFood);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+
+        public async Task<List<Food>> GetAllFoodByRestaurant(Guid RestaurantId)
+        {
+            return await _FoodService.GetFoodByRest(RestaurantId);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        public async Task<Food> UpdateFood(Guid FoodId, FoodRequestDTO UpdatedFood)
+        {
+            return await _FoodService.UpdateFood(FoodId, UpdatedFood);
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Proiect.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<List<Restaurant>> AddRestaurant(RestaurantRequestDTO newRestaurant)
         {
-            return _RestaurantService.AddRestaurant(newRestaurant);
+            return await _RestaurantService.AddRestaurant(newRestaurant);
         }
     }
 }

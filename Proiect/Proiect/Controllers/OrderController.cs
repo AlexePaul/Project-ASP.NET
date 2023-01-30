@@ -48,7 +48,7 @@ namespace Proiect.Controllers
 
         public async Task<bool> FinishOrder(Guid OrderId)
         {
-            return _OrderService.RemoveOrder(OrderId);
+            return await _OrderService.RemoveOrder(OrderId);
         }
     }
 }
