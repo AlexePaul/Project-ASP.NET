@@ -17,9 +17,9 @@ namespace Proiect.Repos.UserRepo
             return _table.FirstOrDefault(x => x.Email == email);
         } 
 
-        public async Task<List<User>> GetAllUsersWithOrders()
+        /*public async Task<List<User>> GetAllUsersWithOrders()
         {
-            return await _table.Include(u => u.Orders).ThenInclude(o => o.delivery).ToListAsync();
-        }
+            return await _table.Include(u => u.Orders).ToListAsync();
+        }*/
     }
 }

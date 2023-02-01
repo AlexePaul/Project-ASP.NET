@@ -29,10 +29,10 @@ namespace Proiect.Services.UserService
             return result;
         }
 
-        public async Task<List<User>> GetAllUsersWithOrders()
+       /* public async Task<List<User>> GetAllUsersWithOrders()
         {
             return await _userRepository.GetAllUsersWithOrders();
-        }
+        }*/
         public async Task<User> AddUser(UserRequestDTO NewUser)
         {
             var newUser = _mapper.Map<User>(NewUser);

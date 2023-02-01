@@ -4,20 +4,19 @@ using Proiect.Repos.FoodRepo;
 using AutoMapper;
 using Proiect.Repos.RestaurantRepo;
 using System.ComponentModel;
+using Proiect.Repos.UnitOfWork;
 
 namespace Proiect.Services.FoodService
 {
     public class FoodService : IFoodService
     {
-        public readonly IFoodRepo _FoodRepo;
+        public readonly IUnitOfWork _unitOfWork;
         public readonly IMapper _Mapper;
-        public readonly IRestaurantRepo _RestaurantRepo;
 
-        public FoodService(IFoodRepo foodRepo, IMapper mapper, IRestaurantRepo restaurantRepo)
+        public FoodService(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _FoodRepo = foodRepo;
+            _unitOfWork = unitOfWork;
             _Mapper = mapper;
-            _RestaurantRepo= restaurantRepo;
         }
 
         public async Task<List<Food>> AddFood(Guid RestaurantId, FoodRequestDTO NewFoodDTO)
@@ -25,15 +24,15 @@ namespace Proiect.Services.FoodService
             Food NewFood = new Food();
             NewFood = _Mapper.Map<Food>(NewFoodDTO);
             NewFood.RestaurantId = RestaurantId;
-            NewFood.Restaurant = _RestaurantRepo.FindById(RestaurantId);
-            await _FoodRepo.CreateAsync(NewFood);
-            await _FoodRepo.SaveAsync();
-            return await _FoodRepo.GetAll();
+            NewFood.Restaurant = _unitOfWork._restaurantRepo.FindById(RestaurantId);
+            await _unitOfWork._foodRepo.CreateAsync(NewFood);
+            await _unitOfWork._foodRepo.SaveAsync();
+            return await _unitOfWork._foodRepo.GetAll();
         }
 
         public async Task<List<Food>> GetFoodByRest(Guid RestaurantId)
         {
-            List<Food> fds =  await _FoodRepo.GetAll();
+            List<Food> fds =  await _unitOfWork._foodRepo.GetAll();
             var query =
                 from f in fds
                 group f by f.RestaurantId into g
@@ -55,24 +54,24 @@ namespace Proiect.Services.FoodService
 
         public async Task<Food> UpdateFood(Guid FoodId, FoodRequestDTO UpdatedFood)
         {
-            Food FoodToUpdate = await _FoodRepo.FindByIdAsync(FoodId);
+            Food FoodToUpdate = await _unitOfWork._foodRepo.FindByIdAsync(FoodId);
             if (FoodToUpdate == null)
                 return null;
             FoodToUpdate.Price = UpdatedFood.Price;
             FoodToUpdate.Quantity = UpdatedFood.Quantity;
             FoodToUpdate.Category = UpdatedFood.Category;
-            _FoodRepo.Update(FoodToUpdate);
-            await _FoodRepo.SaveAsync();
+            _unitOfWork._foodRepo.Update(FoodToUpdate);
+            await _unitOfWork._foodRepo.SaveAsync();
             return FoodToUpdate;
         }
 
         public async Task<bool> RemoveFood(Guid FoodId)
         {
-            var food = await _FoodRepo.FindByIdAsync(FoodId);
+            var food = await _unitOfWork._foodRepo.FindByIdAsync(FoodId);
             if (food != null)
             {
-                _FoodRepo.Delete(food);
-                await _FoodRepo.SaveAsync();
+                _unitOfWork._foodRepo.Delete(food);
+                await _unitOfWork._foodRepo.SaveAsync();
                 return true;
             }
             else
@@ -81,7 +80,7 @@ namespace Proiect.Services.FoodService
 
         public async Task<List<Food>> GetAllFoodsWithRest()
         {
-            return await _FoodRepo.GetAllFoodsWithRest(); 
+            return await _unitOfWork._foodRepo.GetAllFoodsWithRest(); 
         }
     }
 }

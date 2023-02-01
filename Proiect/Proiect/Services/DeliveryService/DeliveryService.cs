@@ -2,16 +2,17 @@
 using Proiect.Models;
 using Proiect.Models.DTOs;
 using Proiect.Repos.DeliveryRepo;
+using Proiect.Repos.UnitOfWork;
 
 namespace Proiect.Services.DeliveryService
 {
     public class DeliveryService :IDeliveryService
     {
-        public readonly IDeliveryRepo _DeliveryRepo;
+        public readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mapper;
-        public DeliveryService(IDeliveryRepo DeliveryRepo, IMapper mapper)
+        public DeliveryService(IUnitOfWork UnitOfWork, IMapper mapper)
         {
-            _DeliveryRepo= DeliveryRepo;  
+            _UnitOfWork = UnitOfWork;  
             _mapper= mapper;
         }
 
@@ -19,14 +20,14 @@ namespace Proiect.Services.DeliveryService
         {
             var NewDelivery = _mapper.Map<Delivery>(delivery);
             NewDelivery.Id = new Guid();
-            await _DeliveryRepo.CreateAsync(NewDelivery);
-            await _DeliveryRepo.SaveAsync();
+            await _UnitOfWork._deliveryRepo.CreateAsync(NewDelivery);
+            await _UnitOfWork._deliveryRepo.SaveAsync();
             return true;
         }
 
         public async Task<List<Delivery>> GetAllDeliveries()
         {
-            return await _DeliveryRepo.GetAll();
+            return await _UnitOfWork._deliveryRepo.GetAll();
         }
 
     }
