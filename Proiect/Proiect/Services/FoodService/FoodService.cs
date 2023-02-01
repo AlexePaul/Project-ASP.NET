@@ -3,6 +3,7 @@ using Proiect.Models;
 using Proiect.Repos.FoodRepo;
 using AutoMapper;
 using Proiect.Repos.RestaurantRepo;
+using System.ComponentModel;
 
 namespace Proiect.Services.FoodService
 {
@@ -63,6 +64,24 @@ namespace Proiect.Services.FoodService
             _FoodRepo.Update(FoodToUpdate);
             await _FoodRepo.SaveAsync();
             return FoodToUpdate;
+        }
+
+        public async Task<bool> RemoveFood(Guid FoodId)
+        {
+            var food = await _FoodRepo.FindByIdAsync(FoodId);
+            if (food != null)
+            {
+                _FoodRepo.Delete(food);
+                await _FoodRepo.SaveAsync();
+                return true;
+            }
+            else
+            { return false; }
+        }
+
+        public async Task<List<Food>> GetAllFoodsWithRest()
+        {
+            return await _FoodRepo.GetAllFoodsWithRest(); 
         }
     }
 }

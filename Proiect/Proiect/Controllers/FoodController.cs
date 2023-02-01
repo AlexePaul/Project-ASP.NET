@@ -38,5 +38,20 @@ namespace Proiect.Controllers
         {
             return await _FoodService.UpdateFood(FoodId, UpdatedFood);
         }
+
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<User>>> RemoveUser(Guid FoodId)
+        {
+            var ok = await _FoodService.RemoveFood(FoodId);
+            if (ok == true)
+            {
+                return Ok(await _FoodService.GetAllFoodsWithRest());
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -35,17 +35,19 @@ namespace Proiect.Services.OrderService
             if (UsingDelivery == null)
                 return false;
             NewOrder.Adress = _adress;
-            NewOrder.User = _user;
-            NewOrder.delivery = UsingDelivery;
+            NewOrder.UserId = _user.Id;
+            NewOrder.DeliveryId = UsingDelivery.Id;
             
             _OrderRepository.CreateAsync(NewOrder);
-            for(int i = 0; i < cart.Count; i++)
+            await _OrderRepository.SaveAsync();
+            for (int i = 0; i < cart.Count; i++)
             {
                 var NewOrderContains = new OrderContains();
-                NewOrderContains.order = NewOrder;
-                NewOrderContains.food = _FoodRepo.FindById(cart[i].Id);
+                NewOrderContains.OrderId = NewOrder.Id;
+                NewOrderContains.FoodId = cart[i].Id;
                 NewOrderContains.amount = cart[i].count;
                 await _OrderContainsRepository.CreateAsync(NewOrderContains);
+                await _OrderContainsRepository.SaveAsync();
             }
             await _OrderRepository.SaveAsync();
             await _OrderContainsRepository.SaveAsync();

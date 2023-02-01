@@ -1,4 +1,5 @@
-﻿using Proiect.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Proiect.Data;
 using Proiect.Models;
 using Proiect.Repos.BaseRepo;
 using Proiect.Repos.UserRepo;
@@ -15,5 +16,10 @@ namespace Proiect.Repos.UserRepo
         {
             return _table.FirstOrDefault(x => x.Email == email);
         } 
+
+        public async Task<List<User>> GetAllUsersWithOrders()
+        {
+            return await _table.Include(u => u.Orders).ThenInclude(o => o.delivery).ToListAsync();
+        }
     }
 }

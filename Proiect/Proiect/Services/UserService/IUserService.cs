@@ -7,6 +7,7 @@ namespace Proiect.Services.UserService
     {
         public Task<User> GetUserById(Guid id);
         Task<List<UserDTO>> GetAllUsers();
+        Task<List<User>> GetAllUsersWithOrders();
         public Task<User> AddUser(UserRequestDTO NewUser);
 
         public User PromoteAdmin(Guid Id);

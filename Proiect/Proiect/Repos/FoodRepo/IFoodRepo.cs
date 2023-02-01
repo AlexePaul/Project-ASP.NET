@@ -5,5 +5,6 @@ namespace Proiect.Repos.FoodRepo
 {
     public interface IFoodRepo : IBaseRepo<Food>
     {
+        public Task<List<Food>> GetAllFoodsWithRest();
     }
 }

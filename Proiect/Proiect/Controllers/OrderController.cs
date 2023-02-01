@@ -35,7 +35,7 @@ namespace Proiect.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
 
         public async Task<Order> ChangeAdress(Guid OrderId, string Adress) 
         {
