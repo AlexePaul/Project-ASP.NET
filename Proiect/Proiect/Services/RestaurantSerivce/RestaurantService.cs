@@ -2,16 +2,17 @@
 using Proiect.Models;
 using Proiect.Models.DTOs;
 using Proiect.Repos.RestaurantRepo;
+using Proiect.Repos.UnitOfWork;
 
 namespace Proiect.Services.RestaurantSerivce
 {
     public class RestaurantService :IRestaurantService
     {
-        public readonly IRestaurantRepo _RestaurantRepo;
+        public readonly IUnitOfWork _unitOfWork;
         public readonly IMapper _Mapper;
-        public RestaurantService(IRestaurantRepo RestaurantRepo, IMapper mapper)
+        public RestaurantService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _RestaurantRepo= RestaurantRepo;
+            _unitOfWork= unitOfWork;
             _Mapper= mapper;
         }
         
@@ -19,9 +20,9 @@ namespace Proiect.Services.RestaurantSerivce
         {
             var newRestaurant = _Mapper.Map<Restaurant>(NewRestaurant);
             newRestaurant.Id = new Guid();
-            await _RestaurantRepo.CreateAsync(newRestaurant);
-            await _RestaurantRepo.SaveAsync();
-            return await _RestaurantRepo.GetAll();
+            await _unitOfWork._restaurantRepo.CreateAsync(newRestaurant);
+            await _unitOfWork._restaurantRepo.SaveAsync();
+            return await _unitOfWork._restaurantRepo.GetAll();
         }
     }
 }

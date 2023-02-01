@@ -7,23 +7,24 @@ using Proiect.Helpers.Utils;
 using BCryptNet = BCrypt.Net.BCrypt;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Proiect.Models.Enums;
+using Proiect.Repos.UnitOfWork;
 
 namespace Proiect.Services.UserService
 {
     public class UserService : IUserService
     {
-        public IUserRepo _userRepository;
+        public IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IJwtUtils _JwtUtils;
-        public UserService(IUserRepo userRepository, IMapper mapper, IJwtUtils jwtUtils)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IJwtUtils jwtUtils)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _JwtUtils = jwtUtils;
         }
         public async Task<List<UserDTO>> GetAllUsers()
         {
-            var users = await _userRepository.GetAll();
+            var users = await _unitOfWork._userRepo.GetAll();
             List<UserDTO> result = _mapper.Map<List<UserDTO>>(users);
 
             return result;
@@ -38,17 +39,17 @@ namespace Proiect.Services.UserService
             var newUser = _mapper.Map<User>(NewUser);
             newUser.Id = new Guid();
             newUser.role = Role.User;
-            await _userRepository.CreateAsync(newUser);
-            await _userRepository.SaveAsync();
+            await _unitOfWork._userRepo.CreateAsync(newUser);
+            await _unitOfWork._userRepo.SaveAsync();
             return newUser;
         }
         public async Task<bool> RemoveUser(Guid Id)
         {
-            var usr = await _userRepository.FindByIdAsync(Id);
+            var usr = await _unitOfWork._userRepo.FindByIdAsync(Id);
             if (usr != null)
             {
-                _userRepository.Delete(usr);
-                await _userRepository.SaveAsync();
+                _unitOfWork._userRepo.Delete(usr);
+                await _unitOfWork._userRepo.SaveAsync();
                 return true;
             }
             else
@@ -56,7 +57,7 @@ namespace Proiect.Services.UserService
         }
         public async Task<bool> EditUser(Guid Id, UserRequestDTO UpdatedUser)
         {
-            var usr = await _userRepository.FindByIdAsync(Id);
+            var usr = await _unitOfWork._userRepo.FindByIdAsync(Id);
             if (usr != null)
             {
                 usr.Adress = UpdatedUser.Adress;
@@ -65,8 +66,8 @@ namespace Proiect.Services.UserService
                 usr.FirstName = UpdatedUser.FirstName;
                 usr.LastName = UpdatedUser.LastName;
                 usr.Email = UpdatedUser.Email;
-                _userRepository.Update(usr);
-                await _userRepository.SaveAsync();
+                _unitOfWork._userRepo.Update(usr);
+                await _unitOfWork._userRepo.SaveAsync();
                 return true;
             }
             else
@@ -76,7 +77,7 @@ namespace Proiect.Services.UserService
         }
         public string Auth(UserLogInDTO request)
         {
-            var usr = _userRepository.FindByEmail(request.Email);
+            var usr = _unitOfWork._userRepo.FindByEmail(request.Email);
             if(usr != null && BCryptNet.Verify(request.Password, usr.Password))
             {
                 return _JwtUtils.GenerateJwtToken(usr);
@@ -88,12 +89,12 @@ namespace Proiect.Services.UserService
         }
         public  User PromoteAdmin(Guid Id)
         {
-            User usr = _userRepository.FindById(Id);
+            User usr = _unitOfWork._userRepo.FindById(Id);
             if (usr != null)
             {
                 usr.role = Role.Admin;
-                _userRepository.Update(usr);
-                _userRepository.SaveAsync();
+                _unitOfWork._userRepo.Update(usr);
+                _unitOfWork._userRepo.SaveAsync();
                 return usr;
             }
             else
@@ -104,7 +105,7 @@ namespace Proiect.Services.UserService
 
         public async Task<User> GetUserById(Guid Id)
         {
-            var users = await _userRepository.GetAll();
+            var users = await _unitOfWork._userRepo.GetAll();
             return users.FirstOrDefault(usr => usr.Id == Id);
         }
     }
