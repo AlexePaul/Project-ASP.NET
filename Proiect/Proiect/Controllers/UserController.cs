@@ -26,8 +26,7 @@ namespace Proiect.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsersWithOrders()
         {
-            //return Ok( await _userService.GetAllUsersWithOrders() );
-            return Ok(await _userService.GetAllUsers());
+            return Ok( await _userService.GetAllUsersWithOrders() );
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

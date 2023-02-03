@@ -30,10 +30,11 @@ namespace Proiect.Services.UserService
             return result;
         }
 
-       /* public async Task<List<User>> GetAllUsersWithOrders()
+        public async Task<List<UserOrderDTO>> GetAllUsersWithOrders()
         {
-            return await _userRepository.GetAllUsersWithOrders();
-        }*/
+            List<UserOrderDTO> usrs = _mapper.Map<List<UserOrderDTO>>(await _unitOfWork._userRepo.GetAllUsersWithOrders());
+            return usrs;       
+        }
         public async Task<User> AddUser(UserRequestDTO NewUser)
         {
             var newUser = _mapper.Map<User>(NewUser);

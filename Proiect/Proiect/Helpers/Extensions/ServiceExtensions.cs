@@ -10,6 +10,7 @@ using Proiect.Services.UserService;
 using Proiect.Services.RestaurantSerivce;
 using Proiect.Repos.RestaurantRepo;
 using Proiect.Services.FoodService;
+using Proiect.Repos.UnitOfWork;
 
 namespace Proiect.Helpers.Extensions
 {
@@ -23,6 +24,7 @@ namespace Proiect.Helpers.Extensions
             services.AddTransient<IFoodRepo, FoodRepo>();
             services.AddTransient<IOrderRepo, OrderRepo>();
             services.AddTransient<IRestaurantRepo, RestaurantRepo>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             return services;
         }
         public static IServiceCollection AddServices(this IServiceCollection services)

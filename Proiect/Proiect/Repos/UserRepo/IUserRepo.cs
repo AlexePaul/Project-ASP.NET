@@ -7,6 +7,6 @@ namespace Proiect.Repos.UserRepo
     {
         public User FindByEmail(string email);
 
-        //public Task<List<User>> GetAllUsersWithOrders();
+        public Task<List<User>> GetAllUsersWithOrders();
     }
 }
